@@ -15,6 +15,15 @@ export default function Home() {
 
   }
 
+  const clear_clone =  (obj) => {
+    if (null == obj || "object" != typeof obj) return obj;
+    var copy = obj.constructor();
+    for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) copy[attr] = "";
+    }
+    return copy;
+  }
+
   const submitHandler = async (event)=>{
     event.preventDefault()
     try{
@@ -26,12 +35,21 @@ export default function Home() {
     
       const res = await response.json()
       console.log(res)
+      // for (let key in formData){
+      //   console.log(key, formData[key]);
+        
+      // }
+      // const clearForm = clear_clone(formData)
+      
+      setFormData((prevFormData) => Object.keys(prevFormData).reduce((acc, key)=>
+        { acc[key] = "" 
+          return acc
+        },{}))
       
     }catch(err){
       console.error("Error: ", err);
     }
   }
-  //foo()
 
   return (
     <div className={styles.page}>
