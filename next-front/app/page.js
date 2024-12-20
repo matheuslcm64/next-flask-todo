@@ -2,8 +2,12 @@
 
 import Image from "next/image";
 import styles from "./page.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 export default function Home() {
+  const [todoList, setTodoList] = useState([])
+  useEffect(async () => {
+    const list = await fetch("");
+  })
   const [formData, setFormData] = useState({task:""})
   const changeHandler = (event) => {
     const {name, value} = event.target;
@@ -15,14 +19,14 @@ export default function Home() {
 
   }
 
-  const clear_clone =  (obj) => {
-    if (null == obj || "object" != typeof obj) return obj;
-    var copy = obj.constructor();
-    for (var attr in obj) {
-        if (obj.hasOwnProperty(attr)) copy[attr] = "";
-    }
-    return copy;
-  }
+  // const clear_clone =  (obj) => {
+  //   if (null == obj || "object" != typeof obj) return obj;
+  //   var copy = obj.constructor();
+  //   for (var attr in obj) {
+  //       if (obj.hasOwnProperty(attr)) copy[attr] = "";
+  //   }
+  //   return copy;
+  // }
 
   const submitHandler = async (event)=>{
     event.preventDefault()
@@ -60,6 +64,11 @@ export default function Home() {
         
         <button>Add Task</button>
       </form>
+
+      <div>
+
+
+      </div>
     </div>
   );
 }
