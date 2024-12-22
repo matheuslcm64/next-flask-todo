@@ -48,7 +48,9 @@ def load_data(file_path="data.json"):
     return data
 
 def store_data(data, new_data):
-    data["todo_list"].append(new_data)
+    #print(new_data["task"])
+    # print(list(new_data.values())[0])
+    data["todo_list"].append(new_data["task"])
     with open("data.json","w") as file:
         json.dump(data, file)
         #json.dump(file, {"todo_list": [d for d in json.load(file)["todo_list"]].append(new_data)})
