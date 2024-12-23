@@ -21,12 +21,25 @@ CORS(app)
 # def hello_uuid(x):
 #     return f"Hello {x}"
 
-@app.route('/hello')
-@app.route('/hello/<name>')
-def index(name=None):
-    print(request.args)
-    # print(request.args.get("key",""))
-    return render_template('hello.html', person=name)
+# Route to return the full list
+@app.route('/tasks', methods=["GET"])
+def get_list():
+    data = load_data()
+    return data
+
+# Route to delete a specific list item
+@app.route('/tasks/delete/<id>', methods=["GET"])
+def delete_item(id):
+    data = load_data()
+    # data[todo_list].pop(id)
+    return jsonify({"message": "OK"})
+
+# Route to update a specific list item
+@app.route('/tasks/update/<id>', methods=["POST"])
+def update_item(id):
+    data = load_data()
+    # data["todo_list"][id]= request.get_json()
+    return jsonify({"message": "OK"})
 
 @app.post("/save")
 def save():

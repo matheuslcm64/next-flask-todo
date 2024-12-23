@@ -7,7 +7,7 @@ export default function Home() {
   const [todoList, setTodoList] = useState([])
   useEffect(async () => {
     const list = await fetch("");
-  })
+  },[]);
   const [formData, setFormData] = useState({task:""})
   const changeHandler = (event) => {
     const {name, value} = event.target;
