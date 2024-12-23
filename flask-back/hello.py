@@ -25,7 +25,8 @@ CORS(app)
 @app.route('/tasks', methods=["GET"])
 def get_list():
     data = load_data()
-    return data
+    #print(data)
+    return jsonify(data)
 
 # Route to delete a specific list item
 @app.route('/tasks/delete/<id>', methods=["GET"])
@@ -51,7 +52,7 @@ def save():
     return jsonify({"message": "OK"})
 
 def load_data(file_path="data.json"):
-    default_data = {"todo_list": []}
+    default_data = {"todo_list": {}}
     if not os.path.exists(file_path):
         with open(file_path, "w") as file:
             json.dump(default_data, file)
@@ -63,7 +64,13 @@ def load_data(file_path="data.json"):
 def store_data(data, new_data):
     #print(new_data["task"])
     # print(list(new_data.values())[0])
-    data["todo_list"].append(new_data["task"])
+    uuid_sample = str(uuid.uuid1())
+    while(data["todo_list"].get(uuid_sample) != None):
+        uuid_sample = str(uuid.uuid1())
+        #print(uuid_sample)
+    data["todo_list"][uuid_sample] = new_data["task"]
+    print(new_data["task"])
+    print(data)
     with open("data.json","w") as file:
         json.dump(data, file)
         #json.dump(file, {"todo_list": [d for d in json.load(file)["todo_list"]].append(new_data)})
