@@ -52,8 +52,8 @@ def save():
     return jsonify({"message": "OK"})
 
 def load_data(file_path="data.json"):
-    default_data = {"todo_list": {}}
     if not os.path.exists(file_path):
+        default_data = {"todo_list": []}
         with open(file_path, "w") as file:
             json.dump(default_data, file)
             file.close()
@@ -61,14 +61,21 @@ def load_data(file_path="data.json"):
         data = json.load(file)
     return data
 
+
+def verify_uuid(data, uuid):
+
+    for i in range(len(data)):
+        if data[i].get(uuid) != None:
+            return True
+    return False
+
 def store_data(data, new_data):
-    #print(new_data["task"])
-    # print(list(new_data.values())[0])
+
     uuid_sample = str(uuid.uuid1())
-    while(data["todo_list"].get(uuid_sample) != None):
+    while(verify_uuid(data["todo_list"], uuid_sample)):
         uuid_sample = str(uuid.uuid1())
-        #print(uuid_sample)
-    data["todo_list"][uuid_sample] = new_data["task"]
+    # data["todo_list"][uuid_sample] = new_data["task"]
+    data["todo_list"].append({uuid_sample: new_data["task"]})
     print(new_data["task"])
     print(data)
     with open("data.json","w") as file:

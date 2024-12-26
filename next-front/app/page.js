@@ -3,6 +3,7 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import { useState, useEffect } from "react";
+import Task from "@/components/task";
 
 export default function Home() {
   const [todoList, setTodoList] = useState([])
@@ -14,8 +15,13 @@ export default function Home() {
       });
       const data = await response.json()
       console.log(data);
-      if (Object.keys(data["todo_list"]).length != 0) {
-        setTodoList(Object.values(data["todo_list"]));
+
+      // if (Object.keys(data["todo_list"]).length != 0) {
+      //   setTodoList(Object.values(data["todo_list"]));
+      // }
+
+      if (data["todo_list"].length != 0) {
+        setTodoList(data["todo_list"]);
       }
     }
     fetchData();
@@ -82,9 +88,9 @@ export default function Home() {
         <button>Add Task</button>
       </form>
 
-      {todoList.length == 0 ?  <p>No tasks.</p> : <ul>
+      {todoList.length == 0 ?  <p>No tasks.</p> : <ul className={styles.taskList}>
         {todoList.map((elem,idx)=>{
-          return <li key={idx}>{elem}</li>
+          return <Task key={idx} uuid={Object.keys(elem)[0]} task={Object.values(elem)[0]}></Task>
         })}
       </ul>} 
 
