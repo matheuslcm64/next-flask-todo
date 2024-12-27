@@ -9,7 +9,7 @@ export default function Task(props) {
                 {props.task}
             </div>
 
-            <Link href={"/delete/"+props.uuid}>
+            <Link href={`/delete/${props.uuid}?task=${encodeURIComponent(props.task)}`}>
                 Delete
             </Link>
 

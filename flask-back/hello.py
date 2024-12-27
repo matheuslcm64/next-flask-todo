@@ -29,27 +29,26 @@ def get_list():
     return jsonify(data)
 
 # Route to delete a specific list item
-@app.route('/tasks/delete/<id>', methods=["GET"])
+@app.route('/delete/<uuid:id>', methods=["GET"])
 def delete_item(id):
-    data = load_data()
+    print(id)
     # data[todo_list].pop(id)
     return jsonify({"message": "OK"})
 
 # Route to update a specific list item
 @app.route('/tasks/update/<id>', methods=["POST"])
 def update_item(id):
-    data = load_data()
     # data["todo_list"][id]= request.get_json()
     return jsonify({"message": "OK"})
 
 @app.post("/save")
 def save():
     data = load_data()
-    store_data(data, request.get_json())
+    new_data = store_data(data, request.get_json())
     #data["text"].append(request.get_json())
     #print(request.get_json())
     #print(data)
-    return jsonify({"message": "OK"})
+    return jsonify(new_data)
 
 def load_data(file_path="data.json"):
     if not os.path.exists(file_path):
@@ -75,14 +74,15 @@ def store_data(data, new_data):
     while(verify_uuid(data["todo_list"], uuid_sample)):
         uuid_sample = str(uuid.uuid1())
     # data["todo_list"][uuid_sample] = new_data["task"]
-    data["todo_list"].append({uuid_sample: new_data["task"]})
+    data_uuid = {uuid_sample: new_data["task"]}
+    data["todo_list"].append(data_uuid)
     print(new_data["task"])
     print(data)
     with open("data.json","w") as file:
         json.dump(data, file)
         #json.dump(file, {"todo_list": [d for d in json.load(file)["todo_list"]].append(new_data)})
-        return True
-    return False
+        return data_uuid
+    return None
 
 
 # with app.test_client() as client:
