@@ -28,10 +28,21 @@ def get_list():
     #print(data)
     return jsonify(data)
 
+def deleteByUUID(uuid):
+    data = load_data()
+    for i in range(len(data["todo_list"])):
+        if data["todo_list"][i].get(uuid) != None:
+            data["todo_list"].pop(i)
+            break
+    return {"todo_list": data["todo_list"]}
+
 # Route to delete a specific list item
-@app.route('/delete/<uuid:id>', methods=["GET"])
+@app.route('/delete/<uuid:id>', methods=["DELETE"])
 def delete_item(id):
+    id = str(id)
     print(id)
+    updated_data = deleteByUUID(id)
+    restore_data(updated_data)
     # data[todo_list].pop(id)
     return jsonify({"message": "OK"})
 
@@ -83,6 +94,13 @@ def store_data(data, new_data):
         #json.dump(file, {"todo_list": [d for d in json.load(file)["todo_list"]].append(new_data)})
         return data_uuid
     return None
+
+def restore_data(data):
+
+    with open("data.json","w") as file:
+        json.dump(data, file)
+        return True
+    return False
 
 
 # with app.test_client() as client:

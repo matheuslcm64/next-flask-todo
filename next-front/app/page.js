@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Task from "@/components/Task";
 import TaskForm from "@/components/TaskForm";
 
-export default function Home() {
+export default function Home({deleteChildren}) {
   const [todoList, setTodoList] = useState([])
   useEffect(()=>{ 
     const fetchData = async () => {
@@ -59,6 +59,7 @@ export default function Home() {
   //   }
   // }
 
+
   return (
     <div className={styles.page}>
       {/* <form className={styles.form} onSubmit={submitHandler}>
@@ -69,6 +70,9 @@ export default function Home() {
         <button>Add Task</button>
       </form> */}
       <TaskForm setTodoList={setTodoList}/>
+      {/* <div>
+        {deleteChildren}
+      </div> */}
       {todoList.length == 0 ?  <p>No tasks.</p> : <ul className={styles.taskList}>
         {todoList.map((elem,idx)=>{
           return <Task key={idx} uuid={Object.keys(elem)[0]} task={Object.values(elem)[0]}></Task>
