@@ -7,9 +7,9 @@ import * as React from 'react';
 import { redirect } from "next/navigation";
 
 export default function DeleteTask({params}) {
+    const {slug} = React.use(params); 
     const searchParams = useSearchParams();
     const task = searchParams.get("task");
-    const {slug} = React.use(params); 
     function deleteHandler() {
         const deleteData = async () => {
             const response = await fetch("http://127.0.0.1:5000/delete/"+slug,{method: "DELETE"});

@@ -47,10 +47,22 @@ def delete_item(id):
     return jsonify({"message": "OK"})
 
 # Route to update a specific list item
-@app.route('/tasks/update/<id>', methods=["POST"])
+@app.route('/update/<uuid:id>', methods=["PATCH"])
 def update_item(id):
+    id = str(id)
+    updatedDataPoint = request.get_json()
+    updatedData = updateByUUID(id, updatedDataPoint)
+    restore_data(updatedData)
     # data["todo_list"][id]= request.get_json()
     return jsonify({"message": "OK"})
+
+def updateByUUID(uuid, updatedDataPoint):
+    data = load_data()
+    for i in range(len(data["todo_list"])):
+        if data["todo_list"][i].get(uuid) != None:
+            data["todo_list"][i] = updatedDataPoint
+            break
+    return {"todo_list": data["todo_list"]}
 
 @app.post("/save")
 def save():
