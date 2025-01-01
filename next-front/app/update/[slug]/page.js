@@ -25,7 +25,7 @@ export default function UpdateTask({params}) {
     function submitHandler(event) {
         event.preventDefault();
         const updateData = async () => {
-            await fetch("http://127.0.0.1:5000/update/"+slug, 
+            await fetch("http://127.0.0.1:5000/"+slug, 
                 {
                     method: "PATCH",
                     body: JSON.stringify(formData),

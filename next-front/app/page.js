@@ -9,10 +9,7 @@ export default function Home({deleteChildren}) {
   const [todoList, setTodoList] = useState([])
   useEffect(()=>{ 
     const fetchData = async () => {
-      const response = await fetch("http://127.0.0.1:5000/tasks", {
-        method: "GET",
-        headers: {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
-      });
+      const response = await fetch("http://127.0.0.1:5000/tasks");
       const data = await response.json()
       console.log(data);
 

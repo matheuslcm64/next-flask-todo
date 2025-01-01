@@ -12,7 +12,7 @@ export default function DeleteTask({params}) {
     const task = searchParams.get("task");
     function deleteHandler() {
         const deleteData = async () => {
-            const response = await fetch("http://127.0.0.1:5000/delete/"+slug,{method: "DELETE"});
+            const response = await fetch("http://127.0.0.1:5000/"+slug,{method: "DELETE"});
             const data = await response.json();
             console.log(data);
             redirect("/")
